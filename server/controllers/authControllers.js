@@ -1,10 +1,11 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
-const config = require('config');
+const config = require('../config');
 const bcrypt = require('bcrypt');
 
 // Registro
 module.exports.signup = (req,res) => {
+    console.log(req.body);
     const { name, lastName, email, password, phoneNumber, address } = req.body;
 
     if(!name || !lastName || !email || !password || !phoneNumber || !address){
@@ -15,8 +16,9 @@ module.exports.signup = (req,res) => {
     .then(user => {
         if(user) return res.status(400).json({msg: 'El email ya tiene un usuario asignado'});
 
-        const newUser = new User({ name, lastName, email, password, phoneNumber, addres });
-
+        const newUser = new User({ name, lastName, email, password, phoneNumber, address });
+        newUser.save()
+        /*
         // Creacion de contraseña encriptada
         bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(password, salt, (err, hash) => {
@@ -27,7 +29,7 @@ module.exports.signup = (req,res) => {
                     .then(user => {
                         jwt.sign(
                             { id: user._id },
-                            config.get('jwtsecret'),
+                            config.get(config.jwtsecret),
                             { expiresIn: 3600 },
                             (err, token) => {
                                 if(err) throw err;
@@ -47,6 +49,7 @@ module.exports.signup = (req,res) => {
                     });
             })
         })
+        */
     })
 };
 
@@ -93,4 +96,9 @@ module.exports.get_user = (req,res) => {
     User.findById(req.user.id)
         .select('-password')
         .then(user => res.json(user));
+}
+
+
+module.exports.get_users = (req,res) => {
+    User.find().sort({date:-1}).then(users => res.json(users));
 }

@@ -1,21 +1,23 @@
+require('dotenv').config();
 const express = require('express');
-const mongoose = require('mongoose');
-const path = require('path');
-const config = require('config');
-mongoose.set('strictQuery', false);
-
+const { appConfig, dbConfig } = require('./config');
+const connectDb = require('./db/mongodb');
+const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/product');
 const cartRoutes = require('./routes/cart');
 const orderRoutes = require('./routes/order');
 
 const app = express();
+app.use(cors())
 app.use(express.json());
 
 app.use('/api',authRoutes);
 app.use('/api',productRoutes);
+app.use('/public', express.static(`${__dirname}/storage/imgs`));
 app.use('/api',cartRoutes);
 app.use('/api',orderRoutes);
+
 
 //usado en produccion para servir los archivos de 'client'
 if(process.env.NODE_ENV === 'production') {
@@ -26,9 +28,15 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 
-//conecta a mongoDB y ejecuta en el puerto 4000
-const dbURI = config.get('dbURI');
-const port = process.env.PORT || 4000;
-mongoose.connect(dbURI, { useNewUrlParser: true })
-    .then(() => app.listen(port, () => console.log(`Server running on http://localhost:${port}`)))
-    .catch((err) => console.log(err));
+//conecta a mongoDB 
+async function initApp (appConfig, dbConfig) {
+    try {
+        await connectDb(dbConfig)
+        app.listen(appConfig.port, () => console.log(`listen on port ${appConfig.port}`))
+    } catch (error) {
+        console.error(e);
+        process.exit(0);
+    }
+};
+
+initApp(appConfig, dbConfig);

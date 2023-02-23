@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const { appConfig } = require('../config');
+
 const Schema = mongoose.Schema;
 
 const ProductSchema = new Schema({
@@ -19,23 +21,23 @@ const ProductSchema = new Schema({
         type: Number,
         required: true
     },
-
-    IMAGEN: VER COMO HACERLO
+*/
     imgUrl: {
         type: String
-    }
-
-    
-    */
+    },
     tags: {
         type: [String],
         required: true
     },
-
     date_added: {
         type: Date,
         default: Date.now
     },
 });
+
+ProductSchema.methods.setImgUrl = function setImgUrl (filename) {
+    const { host, port } = appConfig;
+    this.imgUrl = `${host}:${port}/public/${filename}`
+}
 
 module.exports = Product = mongoose.model('product', ProductSchema);

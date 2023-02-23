@@ -6,9 +6,34 @@ module.exports.get_products = (req,res) => {
 }
 
 // Agregar un producto
-module.exports.post_product = (req,res) => {
-    const newProduct = new Product(req.body);
-    newProduct.save().then(product => res.json(product));
+module.exports.post_product = async(req,res) => {
+    try {
+        const {
+            title,
+            description,
+            price,
+            tags
+        } = req.body
+
+        
+        const product = Product ({
+            title,
+            description,
+            price,
+            tags
+        })
+        
+        if (req.file) {
+            const { filename } = req.file;
+            product.setImgUrl(filename)
+        }
+        
+        const productStore = await product.save();
+        res.status(201).send({ productStore });
+
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
 }
 
 // Actualizar un producto
