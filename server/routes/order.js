@@ -1,13 +1,13 @@
 const { Router } = require('express');
 const orderController = require('../controllers/orderControllers');
 const router = Router();
-require('dotenv').config()
+//require('dotenv').config()
 
-const mercadopago = require('mercadopago');
+//const mercadopago = require('mercadopago');
 
 router.get('/order/:id', orderController.get_orders);
 router.post('/order/:id', orderController.checkout);
-
+/*
 mercadopago.configure(access_token= process.env.MERCADOPAGO_KEY)
 
 
@@ -34,5 +34,5 @@ router.post("/pago", (req, res)=>{
     }
     mercadopago.preferences.create(preference).then((response)=> res.status(200).send({response})).catch((error)=>res.status(400).send({error: error.message}))
 })
-
+*/
 module.exports = router;

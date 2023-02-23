@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 
 // Registro
 module.exports.signup = (req,res) => {
-    console.log(req.body);
+    console.log(req);
     const { name, lastName, email, password, phoneNumber, address } = req.body;
 
     if(!name || !lastName || !email || !password || !phoneNumber || !address){

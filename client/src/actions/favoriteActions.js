@@ -1,3 +1,0 @@
-/**
- * VER COMO HACERLO
- */
