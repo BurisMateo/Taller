@@ -24,7 +24,7 @@ async function initApp (appConfig, dbConfig) {
         await connectDb(dbConfig)
         app.listen(appConfig.port, () => console.log(`listen on port ${appConfig.port}`))
     } catch (error) {
-        console.error(e);
+        console.error(error);
         process.exit(0);
     }
 };
