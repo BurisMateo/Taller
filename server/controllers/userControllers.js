@@ -1,5 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const jwt = require("jsonwebtoken");
+
 
 //obtener todos los usuarios
 module.exports.get_users = async (req, res) => {
@@ -72,8 +74,16 @@ module.exports.login = async (req, res) => {
         bcrypt.compare(password, user.password).then((isMatch) => {
             if(isMatch){
                 const {id, name} = user;
+                const data = {
+                    id,
+                    name
+                };
 
-                return res.json({ msg: 'Usuario logeado', user:{ id, name } })
+                const token = jwt.sign(data, process.env.JWT_SECRET, {
+                    expiresIn: '30d'
+                });
+
+                return res.json({ msg: 'Usuario logeado', user:{ id, name, token } })
             } else {
                 return res.json({msg: 'contraseña incorrecta'})
             }
