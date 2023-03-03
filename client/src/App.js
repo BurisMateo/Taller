@@ -1,7 +1,8 @@
 import React from "react";
 import Register from "./components/Register.jsx"
-import Clientside from "./components/Clientside.jsx";
+//import Clientside from "./components/Clientside.jsx";
 import AddProduct from "./components/AddProduct.jsx"
+import Home from './components/Home'
 import Navbar from './components/Navbar'
 import "./app.css"
 
@@ -14,8 +15,8 @@ function App() {
       {/*<AddProduct/>*/}
 
       <Navbar />
-
-      <Clientside/>
+      <Home />
+      {/*<Clientside/>*/}
 
     </div>
   );
