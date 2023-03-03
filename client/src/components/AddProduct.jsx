@@ -28,11 +28,12 @@ const handleSubmit = async (e) => {
 
     return (
         <>
-            <div className="login">
+            <div className="login mb-3">
+                <h1 class="display-3">Agregue un producto</h1>
                 <div className="form-container">
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
-                            <label for="name" className="form-label">Title</label>
+                            <label for="name" className="form-label">Título</label>
                             <input type="name" className="form-control" id="name" aria-describedby="nameHelp" onChange = { e => setTitle(e.target.value)} value = {title} />
                         </div>
                         <div className="mb-3">
@@ -44,15 +45,17 @@ const handleSubmit = async (e) => {
                             <input type="number" className="form-control" id="price" aria-describedby="priceHelp" onChange = { e => setPrice(e.target.value)} value = {price} />
                         </div>
                         <div className="mb-3">
-                            <label for="phoneNUmber" className="form-label">Phone Number</label>
+                            <label for="phoneNUmber" className="form-label">Etiquetas</label>
                             <input type="name" className="form-control" id="phoneNumber" aria-describedby="phoneHelp" onChange = { e => setPhoneNumber(e.target.value)} value = {phoneNumber} />
                         </div>
                         <div className="mb-3">
                             <label for="image" className="form-label">Imagen</label>
                             <input type="file" className="form-control" id="image" onChange = { e => setImage(e.target.value)} value = {image} />
                         </div>
-                        <button type="submit" className="btn btn-danger mr-5">Cancelar</button>
-                        <button type="submit" className="btn btn-success ml-5">Agregar</button>
+                        <div className='d-flex justify-content-center'>
+                            <button type="submit" className="btn btn-danger me-3">Cancelar</button>
+                            <button type="submit" className="btn btn-success ms-3">Agregar</button>
+                        </div>
                     </form>
                 </div>
             </div>
