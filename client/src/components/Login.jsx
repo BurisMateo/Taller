@@ -28,7 +28,11 @@ export default function Login() {
             .then((res) => {
                 const { data } = res;
                 console.log(data);
-                setMessage(data.msg);
+                if (data.msg) {
+                    window.alert(data.msg)
+                }
+                //setMessage(data.msg);
+                
                 if (data.user) {
                     setTimeout(() => {
                         setMessage("");
@@ -39,7 +43,6 @@ export default function Login() {
             })
             .catch((error) => {
                 console.error(error);
-                setMessage("Correo o contraseña incorrecta");
                 setTimeout(() => {
                     setMessage("");
                 }, 1500)
@@ -49,6 +52,7 @@ export default function Login() {
         }
     }
 
+  
     return (
         <>
             <div className="login mb-5">
@@ -76,7 +80,7 @@ export default function Login() {
                     </form>
                 </div>
             </div>
-            {message && <div className="alert alert-secondary" role="alert">{message}</div>}
+            
         </>
     )
 }
