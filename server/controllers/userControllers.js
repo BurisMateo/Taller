@@ -10,11 +10,11 @@ module.exports.get_users = async (req, res) => {
 
 //obtener un usuario
 module.exports.get_userByID = async (req, res) => {
-    console.log(req.params);
-    const userId = req.params.id;
+    console.log(req.user);
+    const  { id } = req.user;
 
-    if(userId.length === 24) {
-        User.findById(userId).then((user) => {
+    if(id.length === 24) {
+        User.findById(id).then((user) => {
             if(!user){
                 return res.json({msg: 'Usuario no encontrado'})
             } else {
@@ -80,7 +80,7 @@ module.exports.login = async (req, res) => {
                 };
 
                 const token = jwt.sign(data, process.env.JWT_SECRET, {
-                    expiresIn: '30d'
+                    expiresIn: '86400'
                 });
 
                 return res.json({ msg: 'Usuario logeado', user:{ id, name, token } })
