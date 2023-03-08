@@ -2,10 +2,17 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import AuthButtons from './AuthButtons';
+const config = require('../config');
 
 const Navbar = () => {
     const token = localStorage.getItem("token");
+    const [email, setEmail] = useState()
     const [isAuthenticated, setIsAuthenticated] = useState(false)
+    
+    const isAuthorized = () => {
+        if (!isAuthenticated || !config.authorized.includes(email)) return false;
+        return true
+    };
 
     const navigate = useNavigate()
 
@@ -22,11 +29,10 @@ const Navbar = () => {
                     headers: {
                         token: token,
                     },
-                })
+                }).then(({ data }) => setEmail(data.email))
                 .catch((error) => console.error(error));
         }
     }, [token]);
-
 
 
     return (
@@ -47,6 +53,14 @@ const Navbar = () => {
                             </button>
                         </div>
                         <ul className="navbar-nav fw-bold">
+                            {
+                                isAuthorized()
+                                &&
+                                <li className="nav-item">
+                                    <a className="nav-link" aria-current="page" href="/add-product">Productos</a>
+                                </li>
+                                
+                            }
                             <li className="nav-item">
                                 <a className="nav-link" aria-current="page" href="/">Inicio</a>
                             </li>
@@ -59,6 +73,7 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <a className="nav-link" aria-current="page" href="#">Carrito</a>
                             </li>
+                            
                             <li className="nav-item dropdown me-2">
                                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-bell-fill" viewBox="0 0 16 16">
@@ -70,6 +85,7 @@ const Navbar = () => {
                                     <li><a className="dropdown-item">Notificación 2</a></li>
                                 </ul>
                             </li>
+                            
                         </ul>
                         
                         {isAuthenticated ?

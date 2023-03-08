@@ -83,7 +83,7 @@ module.exports.login = async (req, res) => {
                     expiresIn: '86400'
                 });
 
-                return res.json({ msg: 'Usuario logeado', user:{ id, name, token } })
+                return res.json({user:{ id, name, token } })
             } else {
                 return res.json({msg: 'contraseña incorrecta'})
             }

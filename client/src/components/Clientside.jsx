@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+const config = require('../config')
 
 const Clientside = () => {
 
@@ -24,7 +25,7 @@ useEffect(()=>{
         script.setAttribute ('data-preference-id', data.global)
         document.body.appendChild(script)
 
-        const mp = new window.MercadoPago(process.env.MERCADO_PAGO_KEY,{
+        const mp = new window.MercadoPago(config.MERCADO_PAGO_KEY,{
             locale:'es-AR'
         })
 
