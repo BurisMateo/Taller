@@ -7,6 +7,7 @@ import Navbar from './components/navbar/Navbar'
 import "./app.css"
 import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login.jsx";
+import Profile from "./components/Profile.jsx";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/login" element={ <Login /> } />
         <Route path="/register" element={ <Register /> } />
         <Route path="/add-product" element={ <AddProduct /> } />
+        <Route path="/profile" element={ <Profile /> } />
       </Routes>
 
     </>
