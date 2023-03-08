@@ -15,6 +15,9 @@ export default function ClientButtons() {
         <li className="nav-item">
             <a className="nav-link" aria-current="page" href="#">Carrito</a>
         </li>
+        <li className="nav-item">
+            <a className="nav-link" aria-current="page" href="/profile">Mi perfil</a>
+        </li>
         
         <li className="nav-item dropdown me-2">
             <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -12,6 +12,9 @@ export default function AdminButtons() {
         <li className="nav-item">
             <a className="nav-link" aria-current="page" href="#">Pedidos</a>
         </li>
+        <li className="nav-item">
+            <a className="nav-link" aria-current="page" href="/profile">Mi perfil</a>
+        </li>
     </ul>
   )
 }
