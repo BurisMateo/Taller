@@ -1,10 +1,12 @@
 import React,{useState, useEffect} from 'react';
 import axios from 'axios';
+import ProfileEdit from './ProfileEdit';
 
-export default function Profile() {
+export default function Profile(props) {
 
     const [data, setData] = useState({})
     const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [edit, setEdit] = useState(props.state);
 
     const token = localStorage.getItem("token");
 
@@ -36,6 +38,8 @@ export default function Profile() {
                         <li className="list-group-item">Direccion: {data.address}</li>
                     </ul>
             </div>
+            <b className="btn btn-warning" onClick={()=> setEdit(true)}>Editar</b>
+            {edit ? <ProfileEdit data = {data} stateButton = {edit}/> : null}
         </div>
     )
 }

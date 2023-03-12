@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
+const { json } = require('express');
 
 
 //obtener todos los usuarios
@@ -89,4 +90,9 @@ module.exports.login = async (req, res) => {
             }
         })
     })
+}
+
+// updatear datos del usuario
+module.exports.updateData = (req, res) => {
+
 }

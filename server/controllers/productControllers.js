@@ -51,3 +51,13 @@ module.exports.delete_product = (req,res) => {
         res.json({success: true});
     });
 }
+
+//getOnlyOneProduct
+
+module.exports.getProduct = (req,res) => {
+    Product.find({_id: req.params.id},req.body).then(function(product){
+        Product.findOne({_id: req.params.id}).then(function(product){
+            res.json(product);
+        });
+    });
+}

@@ -12,5 +12,6 @@ router.post('/logout', verifyToken, (req, res) => {
     res.clearCookie('token');
     res.status(200).json({ msg: 'Sesión cerrada!' });
 });
+router.put('/profile',userController.updateData);
 
 module.exports = router;
