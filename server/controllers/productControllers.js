@@ -54,7 +54,7 @@ module.exports.delete_product = (req,res) => {
 
 //getOnlyOneProduct
 
-module.exports.getProduct = (req,res) => {
+module.exports.get_Product = (req,res) => {
     Product.find({_id: req.params.id},req.body).then(function(product){
         Product.findOne({_id: req.params.id}).then(function(product){
             res.json(product);
