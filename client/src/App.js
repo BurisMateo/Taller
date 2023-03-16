@@ -9,6 +9,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login.jsx";
 import Profile from "./components/Profile.jsx";
 import AllProducts from "./components/AllProducts.jsx";
+import Product from "./components/Product";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/add-product" element={ <AddProduct /> } />
         <Route path="/profile" element={ <Profile /> } />
         <Route path="/products" element={ <AllProducts /> } />
+        <Route path="/products/:id" element={ <Product /> } />
       </Routes>
 
     </>
