@@ -1,66 +1,105 @@
 import React,{useState} from 'react'
-
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 const AddProduct = () => {
 
-const [title,setTitle] = useState('');
-const [description,setDescription] = useState('');
-const [price,setPrice] = useState('');
-const [phoneNumber,setPhoneNumber] = useState('');
-const [image,setImage] = useState('');
+    const [inputs, setInputs] = useState({
+        title: "",
+        description: "",
+        price: 0
+    });
+    const [image,setImage] = useState();
+    const [tags, setTags] = useState([]);
 
+    
+    const [loading, setLoading] = useState(false);
 
-const handleSubmit = async (e) => {
-    e.preventDefault()
-    await fetch(`http://localhost:8080/api/products`,{
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify({
-            title,
-            description,
-            price,
-            phoneNumber
-        })
-    })
-}
+    const { title, description, price } = inputs;
 
-    return (
-        <>
-            <div className="login mb-3">
-                <h1 class="display-3">Agregue un producto</h1>
-                <div className="form-container">
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-3">
-                            <label for="name" className="form-label">Título</label>
-                            <input type="name" className="form-control" id="name" aria-describedby="nameHelp" onChange = { e => setTitle(e.target.value)} value = {title} />
-                        </div>
-                        <div className="mb-3">
-                            <label for="description" className="form-label">Descripcion</label>
-                            <input type="name" className="form-control" id="description" aria-describedby="descriptionHelp" onChange = { e => setDescription(e.target.value)} value = {description} />
-                        </div>
-                        <div className="mb-3">
-                            <label for="price" className="form-label">Precio</label>
-                            <input type="number" className="form-control" id="price" aria-describedby="priceHelp" onChange = { e => setPrice(e.target.value)} value = {price} />
-                        </div>
-                        <div className="mb-3">
-                            <label for="phoneNUmber" className="form-label">Etiquetas</label>
-                            <input type="name" className="form-control" id="phoneNumber" aria-describedby="phoneHelp" onChange = { e => setPhoneNumber(e.target.value)} value = {phoneNumber} />
-                        </div>
-                        <div className="mb-3">
-                            <label for="image" className="form-label">Imagen</label>
-                            <input type="file" className="form-control" id="image" onChange = { e => setImage(e.target.value)} value = {image} />
-                        </div>
-                        <div className='d-flex justify-content-center'>
-                            <button type="submit" className="btn btn-danger me-3">Cancelar</button>
-                            <button type="submit" className="btn btn-success ms-3">Agregar</button>
-                        </div>
-                    </form>
+    const navigate = useNavigate()
+
+    const handleChange = (e) => {
+        setInputs({ ...inputs, [e.target.name]: e.target.value });
+    };
+
+    
+
+    const handleChangeImg = (e) => {
+        if (e.target.files) {
+            setImage(e.target.files[0])
+        }
+    }
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        if (title !== "" && description !== "" && price !== 0 && /*tags !== [] &&*/ (image !== undefined || image !== null )) {
+            const Product = {
+                title,
+                description,
+                price,
+                //tags,
+                image
+            };
+            setLoading(true);
+            await axios
+                .post("http://localhost:8080/api/products", Product)
+                .then((res) => {
+                    const { data } = res;
+                    console.log(data);
+                    setInputs({ title: "", description: "", price: 0, /*tags: [],*/ });
+                    setTimeout(() => {
+                        navigate("/");
+                    }, 1500);
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+
+            setLoading(false);
+        } else {
+            window.alert('Completa todos los datos')
+        }
+    };
+
+        return (
+            <>
+                <div className="login mb-3">
+                    <h1 class="display-3">Agregue un producto</h1>
+                    <div className="form-container">
+                        <form onSubmit={(e) => onSubmit(e)}>
+                            <div className="mb-3">
+                                <label for="title" className="form-label">Título</label>
+                                <input type="text" className="form-control" onChange={(e) => handleChange(e)} value={title} name="title" id="title" autoComplete='off' />
+                            </div>
+                            <div className="mb-3">
+                                <label for="description" className="form-label">Descripcion</label>
+                                <textarea type="text" className="form-control" id="description" onChange = {(e) => handleChange(e)} value = {description} name="description" autoComplete='off' />
+                            </div>
+                            <div className="mb-3">
+                                <label for="price" className="form-label">Precio</label>
+                                <input type="number" className="form-control" id="price" onChange = {(e) => handleChange(e)} value = {price} name="price" autoComplete='off'/>
+                            </div>
+                            {/**
+                            <div className="mb-3">
+                                <label for="tags" className="form-label">Etiquetas</label>
+                                <input type="text" className="form-control" id="tags" value = {tags} autoComplete='off' />
+                            </div>
+                            
+                             */}
+                            <div className="mb-3">
+                                <label for="image" className="form-label">Imagen</label>
+                                <input type="file" className="form-control" id="image" onChange = { (e) => setImage(e.target.value)} value = {image} name="image" />
+                            </div>
+                            <div className='d-flex justify-content-center'>
+                                <button type="button" onClick={() => navigate('/')} className="btn btn-danger me-3">Cancelar</button>
+                                <button type="submit" className="btn btn-success ms-3">Agregar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </div>
-        </>
-    )
-}
+            </>
+        )
+    }
 
 export default AddProduct;

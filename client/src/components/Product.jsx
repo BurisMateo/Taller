@@ -1,18 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function Product() {
 
-    const [product, setProduct] = useState([])
+    const [product, setProduct] = useState({})
 
     const id = useParams();
 
     const getData = async () => {
-      const res = await fetch(`http://localhost:8080/products/${id}`)
+      const res = await fetch(`http://localhost:8080/api/product/${id}`)
       const data = await res.json();
       setProduct(data)
       console.log(data);
     }
+
+    useEffect(() =>{
+      getData()
+    },[])
 
   return (
       <div className='cards'>

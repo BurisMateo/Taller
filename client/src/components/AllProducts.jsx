@@ -1,16 +1,22 @@
-import React , { useState } from 'react'
+import React , { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function AllProducts() {
 
   const [products, setProducts] = useState([])
+  const navigate = useNavigate()
 
-
+  
   const getData = async () => {
-    const res = await fetch('http://localhost:8080/products')
+    const res = await fetch('http://localhost:8080/api/products')
     const data = await res.json();
     setProducts(data)
     console.log(data);
   }
+
+  useEffect(() => {
+    getData()
+  },[])
 
   return (
 
@@ -23,7 +29,7 @@ export default function AllProducts() {
               <h6 className="card-subtitle mb-2 text-muted">{product.description}</h6>
               <p className="card-text">{product.price}</p>
               <p className="card-text">{product.tags}</p>
-              <button className='btn btn-success' onClick={()=>navigate(`/product/${product.id}`)} >More info</button>
+              <button className='btn btn-success' onClick={()=>navigate(`/product/${product._id}`)} >More info</button>
             </div>
           </div>
         ))}
