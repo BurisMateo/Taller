@@ -20,7 +20,10 @@ export default function Home() {
             token: token,
           },
         })
-        .then(({ data }) => setName(data.name))
+        .then(({ data }) => {
+          
+          console.log(data);
+          setName(data.name)})
         .catch((error) => console.error(error));
     }
   }, [token]);

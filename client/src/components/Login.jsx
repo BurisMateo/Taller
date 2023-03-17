@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Login() {
     
     const [inputs, setInputs] = useState({ email: "", password: "" });
-    const [message, setMessage] = useState();
+    //const [message, setMessage] = useState();
     const [loading, setLoading] = useState(false);
     
     const navigate = useNavigate();
@@ -31,21 +31,15 @@ export default function Login() {
                 if (data.msg) {
                     window.alert(data.msg)
                 }
-                //setMessage(data.msg);
                 
-                if (data.user) {
-                    setTimeout(() => {
-                        setMessage("");
-                        localStorage.setItem('token', data.user.token);
-                        navigate('/')
-                    }, 1500)
+                
+                if (data.user) {    
+                    localStorage.setItem('token', data.user.token);
+                    navigate('/')
                 }
             })
             .catch((error) => {
                 console.error(error);
-                setTimeout(() => {
-                    setMessage("");
-                }, 1500)
             });
             setInputs({ email: "", password: ""});
             setLoading(false)
