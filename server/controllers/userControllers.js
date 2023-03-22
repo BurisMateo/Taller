@@ -83,8 +83,8 @@ module.exports.login = async (req, res) => {
                 const token = jwt.sign(data, process.env.JWT_SECRET, {
                     expiresIn: '24h'
                 });
-
-                return res.json({user:{ id, name, token } })
+            
+                return res.json({user:{ id, name, token, carrito} })
             } else {
                 return res.json({msg: 'contraseña incorrecta'})
             }
