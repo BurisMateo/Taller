@@ -84,7 +84,7 @@ module.exports.login = async (req, res) => {
                     expiresIn: '24h'
                 });
             
-                return res.json({user:{ id, name, token, carrito} })
+                return res.json({user:{ id, name, token} })
             } else {
                 return res.json({msg: 'contraseña incorrecta'})
             }
