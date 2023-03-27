@@ -94,6 +94,7 @@ module.exports.login = async (req, res) => {
 
 // updatear datos del usuario
 module.exports.updateData = (req, res) => {
+    const { email } = req.body
     User.findOne({email}).then((user) =>{
         const id = user._id;
         User.findByIdAndUpdate({_id: id},req.body).then(function(userr){
