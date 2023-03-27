@@ -83,8 +83,8 @@ module.exports.login = async (req, res) => {
                 const token = jwt.sign(data, process.env.JWT_SECRET, {
                     expiresIn: '24h'
                 });
-
-                return res.json({user:{ id, name, token } })
+            
+                return res.json({user:{ id, name, token} })
             } else {
                 return res.json({msg: 'contraseña incorrecta'})
             }
@@ -94,7 +94,7 @@ module.exports.login = async (req, res) => {
 
 // updatear datos del usuario
 module.exports.updateData = (req, res) => {
-    const { email } = req.body
+    const { email } = req.body;
     User.findOne({email}).then((user) =>{
         const id = user._id;
         User.findByIdAndUpdate({_id: id},req.body).then(function(userr){

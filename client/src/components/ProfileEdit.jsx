@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Button, Modal, ModalHeader,ModalBody,ModalFooter,FormGroup,Input,Label} from 'reactstrap';
+import {Button, Modal, ModalHeader,ModalBody,FormGroup} from 'reactstrap';
 import Profile from './Profile';
 
 export default function ProfileEdit(props) {
@@ -10,9 +10,9 @@ export default function ProfileEdit(props) {
     const [address, setAddress] = useState(props.data.address);
     const [isOpen, setIsOpen] = useState(props.stateButton)
 
-    const editPersonalData = () => {
-        const token = localStorage.getItem('token')
-             fetch('http://localhost:8080/api/profile',{
+    const editPersonalData = async() => {
+        const token = localStorage.getItem('token');
+             await fetch('http://localhost:8080/api/profile',{
                 method:'PUT',
                 headers:{
                     'Content-Type':'application/json'
@@ -26,6 +26,8 @@ export default function ProfileEdit(props) {
                     token
                 })
             })
+            setIsOpen(false)
+            window.location.reload(true);
     }
 
     return (
