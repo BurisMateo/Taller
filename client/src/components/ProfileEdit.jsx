@@ -26,7 +26,7 @@ export default function ProfileEdit(props) {
                     token
                 })
             })
-            setIsOpen(false)
+            setIsOpen(false);
             window.location.reload(true);
     }
 
