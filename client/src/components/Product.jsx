@@ -15,6 +15,19 @@ export default function Product() {
       console.log(data);
     }
 
+    const addToDDBB = async () => {
+             await fetch(`http://localhost:8080/api/product/${id}`,{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                  'productId':id,
+                  quantity: 1
+                })
+            })
+          }
+
     useEffect(() =>{
       getData()
     },[])
@@ -27,8 +40,8 @@ export default function Product() {
               <h6 className="card-subtitle mb-2 text-muted">{product.description}</h6>
               <p className="card-text">{product.price}</p>
               <p className="card-text">{product.tags}</p>
+              <button onClick={() => addToDDBB()}>Agregar al carrito</button>
             </div>
           </div>
       </div>
-  )
-}
+  )}
