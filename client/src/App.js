@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Register from "./components/Register.jsx"
 //import Clientside from "./components/Clientside.jsx";
 import AddProduct from "./components/AddProduct.jsx"
-import Home from './components/Home'
 import Navbar from './components/navbar/Navbar'
 import "./app.css"
 import { Routes, Route } from "react-router-dom";
@@ -26,7 +25,7 @@ function App() {
       {/*<Clientside/>*/}
 
       <Routes>
-        <Route path="/" element={ <Home /> } />
+        <Route path="/" element={ <AllProducts carrito = {carrito}/> } />
         <Route path="/login" element={ <Login /> } />
         <Route path="/register" element={ <Register /> } />
         <Route path="/add-product" element={ <AddProduct /> } />
