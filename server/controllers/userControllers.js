@@ -11,7 +11,7 @@ module.exports.get_users = async (req, res) => {
 
 //obtener un usuario
 module.exports.get_userByID = async (req, res) => {
-    console.log(req.user);
+    //console.log(req.user);
     const  { id } = req.user;
 
     if(id.length === 24) {

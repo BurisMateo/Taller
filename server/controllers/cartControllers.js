@@ -2,9 +2,9 @@ const  Cart = require( '../models/Cart' );
 const  Product = require( '../models/Product' );
 
 module.exports.get_cart_products = async (req,res) => {
-    const userId = req.params.id;
+    const userEmail = req.params.id;
     try{
-        let cart = await Cart.findOne({userId});
+        let cart = await Cart.findOne({userEmail});
         if(cart && cart.products.length > 0){
             res.send(cart);
         }
@@ -19,12 +19,11 @@ module.exports.get_cart_products = async (req,res) => {
 }
 
 module.exports.add_cart_product = async (req,res) => {
-    const userId = req.params.id;
-    console.log(userId);
-    const { productId, quantity } = req.body;
+    const { productId, quantity, userEmail } = req.body;
+    console.log(userEmail);
 
     try{
-        let cart = await Cart.findOne({userId});
+        let cart = await Cart.findOne({userEmail});
         let product = await Product.findOne({_id: productId});
         if(!product){
             res.status(404).send('Producto no encontrado')
@@ -55,7 +54,7 @@ module.exports.add_cart_product = async (req,res) => {
         else{
             // Si el usuario no tiene carrito le crea uno
             const newCart = await Cart.create({
-                userId,
+                userEmail,
                 products: [{ productId, name, quantity, price }],
                 bill: quantity*price
             });
@@ -69,10 +68,10 @@ module.exports.add_cart_product = async (req,res) => {
 }
 
 module.exports.delete_product = async (req,res) => {
-    const userId = req.params.userId;
+    const userEmail = req.params.userEmail;
     const productId = req.params.productId;
     try{
-        let cart = await Cart.findOne({userId});
+        let cart = await Cart.findOne({userEmail});
         let productIndex = cart.products.findIndex(p => p.productId == productId);
         if(productIndex > -1)
         {

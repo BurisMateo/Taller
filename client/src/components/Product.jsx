@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
+import axios from 'axios';
 
 export default function Product() {
-
+    const token = localStorage.getItem("token");
     const [product, setProduct] = useState([])
-
+    const [userEmail, setEmail] = useState()
     const { id } = useParams();
 
     const getData = async () => {
@@ -16,6 +17,15 @@ export default function Product() {
     }
 
     const addToDDBB = () => {
+      if (token) {
+        axios
+            .get(`http://localhost:8080/api/user`, {
+                headers: {
+                    token: token,
+                },
+            }).then(({ data }) => setEmail(data.email))
+            .catch((error) => console.error(error));
+      }
         const productId = id;
         const quantity = 1;     
         fetch(`http://localhost:8080/api/product/${id}`,{
@@ -25,14 +35,15 @@ export default function Product() {
           },
           body:JSON.stringify({
             productId,
-            quantity
+            quantity,
+            userEmail
           })
       })
     }
 
     useEffect(() =>{
-      getData()
-    },[])
+      getData();
+    },[]);
 
   return (
       <div className='cards'>
