@@ -2,7 +2,9 @@ const  Cart = require( '../models/Cart' );
 const  Product = require( '../models/Product' );
 
 module.exports.get_cart_products = async (req,res) => {
-    const userEmail = req.params.id;
+
+    const { userEmail } = req.body;
+    
     try{
         let cart = await Cart.findOne({userEmail});
         if(cart && cart.products.length > 0){
