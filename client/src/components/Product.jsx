@@ -15,18 +15,20 @@ export default function Product() {
       console.log(data);
     }
 
-    const addToDDBB = async () => {
-             await fetch(`http://localhost:8080/api/product/${id}`,{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify({
-                  'productId':id,
-                  quantity: 1
-                })
-            })
-          }
+    const addToDDBB = () => {
+        const productId = id;
+        const quantity = 1;     
+        fetch(`http://localhost:8080/api/product/${id}`,{
+          method:'POST',
+          headers:{
+              'Content-Type':'application/json'
+          },
+          body:JSON.stringify({
+            productId,
+            quantity
+          })
+      })
+    }
 
     useEffect(() =>{
       getData()

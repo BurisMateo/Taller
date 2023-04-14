@@ -20,6 +20,7 @@ module.exports.get_cart_products = async (req,res) => {
 
 module.exports.add_cart_product = async (req,res) => {
     const userId = req.params.id;
+    console.log(userId);
     const { productId, quantity } = req.body;
 
     try{
