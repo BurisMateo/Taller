@@ -9,6 +9,7 @@ import Login from "./components/Login.jsx";
 import Profile from "./components/Profile.jsx";
 import AllProducts from "./components/AllProducts.jsx";
 import Product from "./components/Product";
+import Cart from './components/Cart.jsx'
 
 function App() {
   
@@ -32,6 +33,7 @@ function App() {
         <Route path="/profile" element={ <Profile /> } />
         <Route path="/products" element={ <AllProducts carrito = {carrito}/> } />
         <Route path="/product/:id" element={ <Product carrito = {carrito}/> } />
+        <Route path="/cart" element={ <Cart />} />
       </Routes>
 
     </>

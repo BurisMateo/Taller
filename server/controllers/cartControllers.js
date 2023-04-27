@@ -1,5 +1,6 @@
 const  Cart = require( '../models/Cart' ); 
 const  Product = require( '../models/Product' );
+const User = require('../models/User');
 
 module.exports.get_cart_products = async (req,res) => {
 
@@ -22,8 +23,8 @@ module.exports.get_cart_products = async (req,res) => {
 
 module.exports.add_cart_product = async (req,res) => {
     const { productId, quantity, userEmail } = req.body;
-    console.log(userEmail);
-
+    let user = await User.findOne({userEmail});
+    console.log(user);
     try{
         let cart = await Cart.findOne({userEmail});
         let product = await Product.findOne({_id: productId});

@@ -17,15 +17,6 @@ export default function Product() {
     }
 
     const addToDDBB = () => {
-      if (token) {
-        axios
-            .get(`http://localhost:8080/api/user`, {
-                headers: {
-                    token: token,
-                },
-            }).then(({ data }) => setEmail(data.email))
-            .catch((error) => console.error(error));
-      }
         const productId = id;
         const quantity = 1;     
         fetch(`http://localhost:8080/api/product/${id}`,{
@@ -43,7 +34,16 @@ export default function Product() {
 
     useEffect(() =>{
       getData();
-    },[]);
+      if (token) {
+        axios
+            .get(`http://localhost:8080/api/user`, {
+                headers: {
+                    token: token,
+                },
+            }).then(({ data }) => setEmail(data.email))
+            .catch((error) => console.error(error));
+      }
+    },[token]);
 
   return (
       <div className='cards'>

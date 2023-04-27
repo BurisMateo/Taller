@@ -18,19 +18,24 @@ export default function Cart() {
                     },
                 }).then(({ data }) => setEmail(data.email))
                 .catch((error) => console.error(error));
-          }
           const res = fetch(`http://localhost:8080/api/cart/${email}`)
           const carrito =  res.json();
           setCart(carrito);
-          console.log(data);
+          console.log(email);
         }
-
     }
 
   return (
     <div>
-        {cart.map(product => (
-            <p>product.title</p>
-        ))}
+        {
+            /*
+            cart.map(product => (
+                <p>product.title</p>
+            ))
+                */
+        }
+    <h1>carrito</h1>
+
     </div>
   )
+}
