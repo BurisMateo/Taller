@@ -19,7 +19,7 @@ module.exports.get_userByID = async (req, res) => {
             if(!user){
                 return res.json({msg: 'Usuario no encontrado'})
             } else {
-                const { _id, password, __v, ...resto} = user._doc
+                const { password, __v, ...resto } = user._doc
                 res.json(resto)
             }
         })
