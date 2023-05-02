@@ -26,13 +26,13 @@ function App() {
       {/*<Clientside/>*/}
 
       <Routes>
-        <Route path="/" element={ <AllProducts carrito = {carrito}/> } />
+        <Route path="/" element={ <AllProducts /> } />
         <Route path="/login" element={ <Login /> } />
         <Route path="/register" element={ <Register /> } />
         <Route path="/add-product" element={ <AddProduct /> } />
         <Route path="/profile" element={ <Profile /> } />
-        <Route path="/products" element={ <AllProducts carrito = {carrito}/> } />
-        <Route path="/product/:id" element={ <Product carrito = {carrito}/> } />
+        <Route path="/products" element={ <AllProducts /> } />
+        <Route path="/product/:id" element={ <Product /> } />
         <Route path="/cart" element={ <Cart />} />
       </Routes>
 

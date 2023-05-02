@@ -13,7 +13,7 @@ export default function ClientButtons() {
             <a className="nav-link" aria-current="page" href="#">Favoritos</a>
         </li>
         <li className="nav-item">
-            <a className="nav-link" aria-current="page" href="#">Carrito</a>
+            <a className="nav-link" aria-current="page" href="/cart">Carrito</a>
         </li>
         <li className="nav-item">
             <a className="nav-link" aria-current="page" href="/profile">Mi perfil</a>

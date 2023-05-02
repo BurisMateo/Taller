@@ -9,6 +9,22 @@ module.exports.get_users = async (req, res) => {
     User.find().sort({date:-1}).then(users => res.json(users));
 }
 
+module.exports.get_userByEmail = async (req, res) => {
+    const userEmail = req.query.email;
+    //console.log(userEmail);
+    if (userEmail) {
+        User.findOne({email: userEmail}).then((user) => {
+            if(!user){
+                return res.json({msg: 'Usuario no encontrado'})
+            } else {
+                res.json(user);
+            }
+        })
+    } else {
+        res.json({msg: 'No se encontro ningun usuario con ese email'})
+    }
+}
+
 //obtener un usuario
 module.exports.get_userByID = async (req, res) => {
     //console.log(req.user);

@@ -13,7 +13,6 @@ export default function Product() {
       const res = await fetch(`http://localhost:8080/api/product/${id}`)
       const data = await res.json();
       setProduct(data)
-      console.log(product);
     }
 
     const addToDDBB = () => {
@@ -43,6 +42,7 @@ export default function Product() {
             }).then(({ data }) => setEmail(data.email))
             .catch((error) => console.error(error));
       }
+      console.log(userEmail);
     },[token]);
 
   return (

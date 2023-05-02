@@ -1,10 +1,11 @@
 const  Cart = require( '../models/Cart' ); 
 const  Product = require( '../models/Product' );
 const User = require('../models/User');
+const { get_userByID } = require('./userControllers');
 
 module.exports.get_cart_products = async (req,res) => {
-
-    const userId = req.params.userId;
+    
+    const userId = req.params.id;
     
     try{
         let cart = await Cart.findOne({userId: userId});
@@ -22,8 +23,9 @@ module.exports.get_cart_products = async (req,res) => {
 }
 
 module.exports.add_cart_product = async (req,res) => {
-    const { productId, quantity, userId } = req.body;
-    console.log(user);
+    const { productId, quantity, userEmail } = req.body;
+    const user = await User.findOne({email: userEmail})
+    const userId = user._id
     try{
         let cart = await Cart.findOne({userId:userId});
         let product = await Product.findOne({_id: productId});
@@ -61,7 +63,7 @@ module.exports.add_cart_product = async (req,res) => {
                 bill: quantity*price
             });
             return res.status(201).send(newCart);
-        }       
+        }
     }
     catch (err) {
         console.log(err);
