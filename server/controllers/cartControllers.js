@@ -23,9 +23,8 @@ module.exports.get_cart_products = async (req,res) => {
 }
 
 module.exports.add_cart_product = async (req,res) => {
-    const { productId, quantity, userEmail } = req.body;
-    const user = await User.findOne({email: userEmail})
-    const userId = user._id
+    const { productId, quantity, userId } = req.body;
+
     try{
         let cart = await Cart.findOne({userId:userId});
         let product = await Product.findOne({_id: productId});
@@ -75,7 +74,7 @@ module.exports.delete_product = async (req,res) => {
     const userId = req.params.userId;
     const productId = req.params.productId;
     try{
-        let cart = await Cart.findOne({userId});
+        let cart = await Cart.findOne({userId: userId});
         let productIndex = cart.products.findIndex(p => p.productId == productId);
         if(productIndex > -1)
         {

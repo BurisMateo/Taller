@@ -46,8 +46,35 @@ export default function AllProducts(props) {
 }, [token]);
   
   return (
-
     <div>
+      {
+        isAuthorized() ?
+          <div className='d-grid gap-2 col-6 mx-auto justify-content-center mt-3 mb-3'>
+            <button className='btn btn-warning' onClick={()=>navigate('/add-product')}>Add product</button>
+          </div>
+          :
+          null
+      }
+      <div className="row row-cols-1 row-cols-md-5 g-4 justify-content-center mt-2">
+        {products.map(product => (
+          <div className="col">
+            <div className="card h-100">
+              <img src={product.imgUrl} className="card-img-top "></img>
+                <div className="card-body">
+                  <h5 className="card-title">{product.title}</h5>
+                </div>
+                <div className='card-footer'>
+                  <button className='btn btn-success' onClick={()=>navigate(`/product/${product._id}`)} >Ver más</button>
+                </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+/*
+
+<div>
       <div className='cards'>
         {
           isAuthorized() ?
@@ -62,13 +89,13 @@ export default function AllProducts(props) {
               <h6 className="card-subtitle mb-2 text-muted">{product.description}</h6>
               <p className="card-text">{product.price}</p>
               <p className="card-text">{product.tags}</p>
-              <button className='btn btn-success' onClick={()=>navigate(`/product/${product._id}`)} >More info</button>
-              <button className='btn btn-warning' onClick={()=>addToCart(product._id)}>Add to cart</button>
+              <button className='btn btn-success' onClick={()=>navigate(`/product/${product._id}`)} >Ver más</button>
             </div>
           </div>
         ))}
       </div>
     </div>
 
-  )
+
+*/
 }

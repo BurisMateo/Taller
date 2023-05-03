@@ -21,11 +21,12 @@ const OrderSchema = new Schema({
         type: Number,
         required: true
     },
-    /*ESTADO: VER COMO USARLO
+    
     state: {
-        ['en espera', 'preparando', 'enviado', 'demorado', 'cancelado', 'finalizado']
-    }
-    */
+        type: String,
+        default:'pendiente'
+    },
+
     date_added: {
         type: Date,
         default: Date.now

@@ -10,6 +10,7 @@ import Profile from "./components/Profile.jsx";
 import AllProducts from "./components/AllProducts.jsx";
 import Product from "./components/Product";
 import Cart from './components/Cart.jsx'
+import Orders from './components/Orders.jsx'
 
 function App() {
   
@@ -23,7 +24,6 @@ function App() {
 
       {/*<Register /> */}
       {/*<AddProduct/>*/}
-      {/*<Clientside/>*/}
 
       <Routes>
         <Route path="/" element={ <AllProducts /> } />
@@ -34,6 +34,8 @@ function App() {
         <Route path="/products" element={ <AllProducts /> } />
         <Route path="/product/:id" element={ <Product /> } />
         <Route path="/cart" element={ <Cart />} />
+        <Route path="/orders" element={ <Orders />} />
+
       </Routes>
 
     </>

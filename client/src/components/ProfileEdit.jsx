@@ -42,23 +42,23 @@ export default function ProfileEdit(props) {
 
                 <FormGroup>
                     <div className="mb-3">
-                        <label for="name" className="form-label">Nombre</label>
+                        <label htmlFor="name" className="form-label">Nombre</label>
                         <input type="text" className="form-control" id="name" value={name} onChange = { e => setName(e.target.value)} required />
                     </div>
                     <div className="mb-3">
-                        <label for="name" className="form-label">Apellido</label>
+                        <label htmlFor="name" className="form-label">Apellido</label>
                         <input type="text" className="form-control" id="apellido" value={lastName} onChange = { e => setlastName(e.target.value)} required />
                     </div>
                     <div className="mb-3">
-                        <label for="name" className="form-label">Numero de telefono</label>
+                        <label htmlFor="name" className="form-label">Numero de telefono</label>
                         <input type="text" className="form-control" id="phoneNumber" value={phoneNumber} onChange = { e => setphoneNumber(e.target.value)} required />
                     </div>
                     <div className="mb-3">
-                        <label for="name" className="form-label">Email</label>
+                        <label htmlFor="name" className="form-label">Email</label>
                         <input type="email" className="form-control" id="Email" value={email} onChange = { e => setEmail(e.target.value)} />
                     </div>
                     <div className="mb-3">
-                        <label for="name" className="form-label">Direccion</label>
+                        <label htmlFor="name" className="form-label">Direccion</label>
                         <input type="text" className="form-control" id="address" value={address} onChange = { e => setAddress(e.target.value)} required />
                     </div>
                     <Button className='btn btn-success' onClick={editPersonalData}>Confirmar</Button>
