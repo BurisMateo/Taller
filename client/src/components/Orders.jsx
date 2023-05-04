@@ -37,27 +37,21 @@ export default function Orders() {
             {
                 data !== undefined
                     ?
-                    <div class="accordion" id="accordionExample">
-
-                        {
-                            data.map(order => (
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" href={order} aria-expanded="true" aria-controls={order}>
-                                            {order.name}
-                                        </button>
-                                    </h2>
-                                    <div id={order} class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                        {order.products.map(product => (
-                                            <div class="accordion-body">
-                                                <strong>{order.userId}</strong>
-                                                <p>{product.name}</p>
-                                            </div>
-                                        ))}
-                                    </div>
+                    <div>
+                        {data.map(order => (
+                            <div>
+                            <p>
+                                <a class="btn btn-primary" data-bs-toggle="collapse" href={('#').concat(order._id)} role="button" aria-expanded="false" aria-controls="collapseExample">Pedido #{order._id} - {order.state}</a>
+                            </p>
+                            {order.products.map(product => (
+                                <div class="collapse" id={order._id}>
+                                <div class="card card-body">
+                                  <p>{product.name} - {product.quantity}</p>
                                 </div>
-                            ))
-                        }
+                              </div>
+                            ))}
+                            </div>
+                        ))}
                     </div>
                     :
                     <p>No ningún pedido pendiente</p>
