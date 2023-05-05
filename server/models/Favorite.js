@@ -10,7 +10,10 @@ const FavoriteSchema = new Schema({
         productId: {
             type: String,
         },
-        name: String
+        name: String,
+        imgUrl: {
+            type: String
+        }
     }],
 });
 

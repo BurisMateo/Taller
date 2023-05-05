@@ -1,16 +1,19 @@
-import React, { useState } from "react";
-import Register from "./components/Register.jsx"
-//import Clientside from "./components/Clientside.jsx";
-import AddProduct from "./components/AddProduct.jsx"
-import Navbar from './components/navbar/Navbar'
 import "./app.css"
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import Login from "./components/Login.jsx";
-import Profile from "./components/Profile.jsx";
-import AllProducts from "./components/AllProducts.jsx";
-import Product from "./components/Product";
-import Cart from './components/Cart.jsx'
-import Orders from './components/Orders.jsx'
+
+import Register from "./components/user/Register.jsx"
+import AddProduct from "./components/product/AddProduct.jsx"
+import Navbar from './components/navbar/Navbar'
+import Login from "./components/user/Login.jsx";
+import Profile from "./components/user/Profile.jsx";
+import AllProducts from "./components/product/AllProducts";
+import Product from "./components/product/Product.jsx";
+import Cart from './components/user/Cart.jsx'
+import Orders from './components/order/Orders.jsx'
+import OrderHistory from "./components/order/OrderHistory.jsx";
+import Favorites from "./components/user/Favorites";
+import MyOrders from "./components/order/MyOrders";
 
 function App() {
   
@@ -35,6 +38,9 @@ function App() {
         <Route path="/product/:id" element={ <Product /> } />
         <Route path="/cart" element={ <Cart />} />
         <Route path="/orders" element={ <Orders />} />
+        <Route path="/order-history" element={ <OrderHistory /> } />
+        <Route path="/favorites" element={ <Favorites /> } />
+        <Route path="/my-orders" element= { <MyOrders /> } />
 
       </Routes>
 

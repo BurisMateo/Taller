@@ -19,8 +19,8 @@ module.exports.get_fav_products = async (req,res) => {
 }
 
 module.exports.add_fav_product = async (req,res) => {
-    const userId = req.params.userId;
-    const productId = req.params.productId;
+    const userId = req.params.id
+    const { productId } = req.body;
 
     try{
         let fav = await Favorite.findOne({userId: userId});
@@ -29,6 +29,7 @@ module.exports.add_fav_product = async (req,res) => {
             res.status(404).send('Producto no encontrado')
         }
         const name = product.title;
+        const imgUrl = product.imgUrl;
         
         if(fav){
             // Si el carrito del usuario existe
@@ -41,8 +42,8 @@ module.exports.add_fav_product = async (req,res) => {
                 res.status.send("Ya es parte de tus favoritos")
             }
             else {
-                //si no agrega el proucto
-                fav.products.push({ productId, name });
+                //si no agrega el producto
+                fav.products.push({ productId, name, imgUrl });
             }
             fav = await fav.save();
             return res.status(201).send(fav);
@@ -51,7 +52,7 @@ module.exports.add_fav_product = async (req,res) => {
             // Si el usuario no tiene favoritos
             const newFavorite = await Favorite.create({
                 userId,
-                products: [{ productId, name }],
+                products: [{ productId, name, imgUrl }],
             });
             return res.status(201).send(newFavorite);
         }       

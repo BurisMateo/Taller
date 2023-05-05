@@ -1,7 +1,7 @@
 import React , { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-const config = require('../config');
+const config = require('../../config');
 
 
 export default function AllProducts(props) {

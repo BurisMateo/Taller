@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-const config = require('../config');
+import ProductEdit from './ProductEdit';
+
+const config = require('../../config');
 
 
-export default function Product() {
+
+export default function Product(props) {
     const token = localStorage.getItem("token");
     const [product, setProduct] = useState([])
     const [userEmail, setUserEmail] = useState();
     const [userId, setUserId] = useState()
     const { id } = useParams();
+    const [edit, setEdit] = useState(props.state);
 
     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
@@ -42,6 +46,21 @@ export default function Product() {
           })
       })
     }
+
+    const addToFavs = (pid) => {
+      const productId = pid; 
+      console.log(userId, productId);
+      fetch(`http://localhost:8080/api/favorite/${userId}`,{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+          productId
+        })
+    })
+  }
+
 
     const deleteProduct = (id) => {
       axios
@@ -82,12 +101,16 @@ export default function Product() {
               isAuthorized() 
               ?
                 <div>
-                  <button className='btn btn-primary me-2' onClick={() => console.log('editar')}>Editar</button>
+                  <button className='btn btn-primary me-2' onClick={()=> setEdit(true)}>Editar</button>
                   <button className='btn btn-danger' onClick={() => deleteProduct(product._id)}>Eliminar</button>
+                  {edit ? <ProductEdit data = {product} stateButton = {edit}/> : null}
                 </div>
               : isAuthenticated
                 ?
-                  <button className='btn btn-success' onClick={() => addToCart()}>Agregar al carrito</button>
+                  <div>
+                    <button className='btn btn-success' onClick={() => addToCart()}>Agregar al carrito</button>
+                    <button className='btn btn-warning ms-2' onClick={() => addToFavs(product._id)}>Agregar a fav</button>
+                  </div>
                 :
                 null
             }

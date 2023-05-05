@@ -7,10 +7,10 @@ export default function ClientButtons() {
             <a className="nav-link" aria-current="page" href="/">Inicio</a>
         </li>
         <li className="nav-item">
-            <a className="nav-link" aria-current="page" href="#">Mis Pedidos</a>
+            <a className="nav-link" aria-current="page" href="/my-orders">Mis Pedidos</a>
         </li>
         <li className="nav-item">
-            <a className="nav-link" aria-current="page" href="#">Favoritos</a>
+            <a className="nav-link" aria-current="page" href="/favorites">Favoritos</a>
         </li>
         <li className="nav-item">
             <a className="nav-link" aria-current="page" href="/cart">Carrito</a>

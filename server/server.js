@@ -7,6 +7,7 @@ const userRoutes = require('./routes/user');
 const productRoutes = require('./routes/product');
 const cartRoutes = require('./routes/cart');
 const orderRoutes = require('./routes/order');
+const favoriteRoutes = require('./routes/favorite');
 
 const app = express();
 app.use(cors())
@@ -17,6 +18,7 @@ app.use('/api',productRoutes);
 app.use('/public', express.static(`${__dirname}/storage/imgs`));
 app.use('/api',cartRoutes);
 app.use('/api',orderRoutes);
+app.use('/api',favoriteRoutes)
 
 //conecta a mongoDB 
 async function initApp (appConfig, dbConfig) {

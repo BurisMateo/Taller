@@ -23,14 +23,6 @@ const AddProduct = () => {
         setInputs({ ...inputs, [e.target.name]: e.target.value });
     };
 
-    
-
-    const handleChangeImg = (e) => {
-        if (e.target.files) {
-            setImage(e.target.files)
-        }
-    }
-
     const onSubmit = async (e) => {
         e.preventDefault();
         if (title !== "" && description !== "" && price !== 0 && /*tags !== [] &&*/ (image !== undefined || image !== null )) {
