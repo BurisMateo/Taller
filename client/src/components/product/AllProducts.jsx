@@ -1,12 +1,21 @@
 import React , { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { debounce } from 'lodash';
 const config = require('../../config');
 
+const filterProducts = (allProducts, searchTerm) => {
+  if (!searchTerm) return allProducts;
+
+  return allProducts.filter((p) => `${p.title} ${p.description}`.toLowerCase().includes(searchTerm.toLowerCase()));
+};
 
 export default function AllProducts(props) {
 
-  const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const filteredProducts = filterProducts(allProducts, searchTerm);
+
   const token = localStorage.getItem("token");
   const [email, setEmail] = useState()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -27,7 +36,7 @@ export default function AllProducts(props) {
   const getData = async () => {
     const res = await fetch('http://localhost:8080/api/products')
     const data = await res.json();
-    setProducts(data)
+    setAllProducts(data)
     console.log(data);
   }
 
@@ -44,7 +53,7 @@ export default function AllProducts(props) {
             .catch((error) => console.error(error));
     }
 }, [token]);
-  
+
   return (
     <div>
       {
@@ -55,9 +64,10 @@ export default function AllProducts(props) {
           :
           null
       }
+      <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
       <div className="row row-cols-1 row-cols-md-5 g-4 justify-content-center mt-2">
-        {products.map(product => (
-          <div className="col">
+        {filteredProducts.map(product => (
+          <div className="col" key={product._id}>
             <div className="card h-100">
               <img src={product.imgUrl} className="card-img-top "></img>
                 <div className="card-body">
