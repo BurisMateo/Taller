@@ -42,7 +42,7 @@ module.exports.add_cart_product = async (req,res) => {
             if(productIndex > -1)
             {
                 //si existe agrega a la cantidad de ese mismo producto
-                let productItem = cart.products[productIndex];
+                let productItem = cart.products[productIndex];    
                 productItem.quantity += quantity;
                 cart.products[productIndex] = productItem;
             }
@@ -62,6 +62,42 @@ module.exports.add_cart_product = async (req,res) => {
                 bill: quantity*price
             });
             return res.status(201).send(newCart);
+        }
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send("Algo salió mal");
+    }
+}
+
+module.exports.del_cart_product = async (req,res) => {
+    const { productId, quantity, userId } = req.body;
+
+    try{
+        let cart = await Cart.findOne({userId:userId});
+        let product = await Product.findOne({_id: productId});
+        if(!product){
+            res.status(404).send('Producto no encontrado')
+        }
+        const price = product.price;
+        
+        if(cart){
+            // Si el carrito del usuario existe
+            let productIndex = cart.products.findIndex(p => p.productId == productId);
+
+            // Comprueba si el producto existe o no en el carrito
+            if(productIndex > -1)
+            {
+                //si existe elimina a la cantidad de ese mismo producto
+                let productItem = cart.products[productIndex];
+                if (productItem.quantity!==1){
+                    productItem.quantity -= quantity;
+                    cart.products[productIndex] = productItem;
+                    cart.bill -= quantity*price;
+                }
+            }
+            cart = await cart.save();
+            return res.status(201).send(cart);
         }
     }
     catch (err) {

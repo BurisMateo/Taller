@@ -9,9 +9,11 @@ export default function Favorites() {
     const navigate = useNavigate();
 
     const deleteFromFavs = (id) => {
-        axios
-        .delete(`http://localhost:8080/api/favorite/${userId}/${id}`)
-        .then(navigate(0))
+        if (window.confirm('¿Está seguro que desea eliminarlo de sus favoritos?') == true){
+            axios
+            .delete(`http://localhost:8080/api/favorite/${userId}/${id}`)
+            .then(navigate(0))
+        }
     }
 
     useEffect(() => {

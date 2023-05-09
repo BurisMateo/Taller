@@ -25,9 +25,9 @@ export default function Profile(props) {
       }, [token]);
 
     return (
-        <div>
-            <div className="card" style={{width: 300}}>
-                <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" className="card-img-top" alt="img"/>
+        <div className='mt-5' style={{justifyContent:'center',display:'flex', textAlign:'center'}}>
+            <div className="card" style={{width: 250}}>
+                <img src="https://cdn-icons-png.flaticon.com/512/17/17004.png" className="card-img-top" style={{width:100, margin:'auto'}} alt="img"/>
                     <div className="card-body">
                         <h5 className="card-title">Nombre: {data.name}</h5>
                         <p className="card-text">Apellido: {data.lastName}</p>
@@ -37,8 +37,8 @@ export default function Profile(props) {
                         <li className="list-group-item">Email: {data.email}</li>
                         <li className="list-group-item">Direccion: {data.address}</li>
                     </ul>
+                    <b className="btn btn-warning" onClick={()=> setEdit(true)}>Editar</b>
             </div>
-            <b className="btn btn-warning" onClick={()=> setEdit(true)}>Editar</b>
             {edit ? <ProfileEdit data = {data} stateButton = {edit}/> : null}
         </div>
     )

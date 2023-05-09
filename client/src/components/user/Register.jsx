@@ -39,25 +39,25 @@ const Register = () => {
                 .post("http://localhost:8080/api/register", User)
                 .then((res) => {
                     const { data } = res;
-                    console.log(data);
-                    setMessage(data.msg);
-                    setInputs({ name: "", lastName: "", email: "", password: "", phoneNumber: "", address: "" });
-                    setTimeout(() => {
-                        setMessage("");
-                        navigate("/login");
-                    }, 1500);
+                    if (data.msg === 'El email ya está registrado') {
+                        window.alert(data.msg);
+                    } else {
+                        setInputs({ name: "", lastName: "", email: "", password: "", phoneNumber: "", address: "" });
+                        setTimeout(() => {
+                            navigate("/login");
+                        }, 1500);
+                    }
                 })
                 .catch((error) => {
                     console.error(error);
-                    setMessage("Hubo un error");
                     setTimeout(() => {
-                        setMessage("");
+                        navigate(0);
                     }, 1500);
                 });
 
             setLoading(false);
         } else {
-            setMessage("Completa todos los campos")
+            window.alert('Completa todos los campos')
         }
     };
 
@@ -104,7 +104,6 @@ const Register = () => {
                     </form>
                 </div>
             </div>
-            {message && <div className="alert alert-secondary" role="alert">{message}</div>}
         </>
     )
 }

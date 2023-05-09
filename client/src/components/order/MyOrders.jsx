@@ -4,7 +4,7 @@ import axios from 'axios';
 export default function MyOrders() {
     const token = localStorage.getItem("token");
     const [userId, setUserId] = useState()
-    const [data, setData] = useState()
+    const [data, setData] = useState([])
 
     useEffect(() => {
         if (token) {
@@ -19,6 +19,7 @@ export default function MyOrders() {
                         await axios
                             .get(`http://localhost:8080/api/order/${userId}`)
                             .then(({ data }) => {
+                                console.log(userId)
                                 setData(data);
                                 console.log(data)
                             })
@@ -30,11 +31,11 @@ export default function MyOrders() {
 
 
   return (
-    <div>
+    <div className='mt-5'>
         {
                 data !== undefined
                     ?
-                    <div>
+                    <div style={{displat:'flex', justifyContent:'center', textAlign:'center'}}>
                         {data.map(order => (
                             <div>
                             <p>
@@ -52,6 +53,7 @@ export default function MyOrders() {
                     </div>
                     :
                     <p>No hay ningún pedido en el historial</p>
+                
             }
     </div>
   )

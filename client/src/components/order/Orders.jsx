@@ -7,7 +7,6 @@ export default function Orders() {
     const token = localStorage.getItem("token");
     const [email, setEmail] = useState()
     const [data, setData] = useState()
-    const [user, setUser] = useState()
 
     const navigate = useNavigate()
 
@@ -22,7 +21,6 @@ export default function Orders() {
             throw error
         }
     }
-    
 
     const finishOrder = (id) => {
         axios
@@ -44,27 +42,30 @@ export default function Orders() {
     }, [token]);
 
     return (
-        <div>
+        <div className='mt-5'>
             <div className='d-grid gap-2 col-6 mx-auto justify-content-center mt-3 mb-3'>
                 <button className='btn btn-warning' onClick={()=>navigate('/order-history')}>Historial</button>
             </div>
             {
                 data !== undefined
                     ?
-                    <div>
+                    <div style={{displat:'flex', justifyContent:'center', textAlign:'center'}} >
                         {data.map(order => (
                             <div>
-                            <p>
-                                <a class="btn btn-primary" data-bs-toggle="collapse" href={('#').concat(order._id)} role="button" aria-expanded="false" aria-controls="collapseExample">Pedido #{order._id} - {order.state}</a>
-                                <button className='btn btn-danger' onClick={() => finishOrder(order._id)}>Finalizar</button>
-                            </p>
-                            <div class="collapse" id={order._id}>
-                                {order.products.map(product => (
-                                    <div class="card card-body">
-                                    <p>{product.name} - {product.quantity}</p>
+                                <p>
+                                    <a class="btn btn-primary" data-bs-toggle="collapse" href={('#').concat(order._id)} role="button" aria-expanded="false" aria-controls="collapseExample">Pedido #{order._id} - {order.state}</a>
+                                    <button className='btn btn-danger' onClick={() => finishOrder(order._id)}>Finalizar</button>
+                                </p>
+                                <div class="collapse" id={order._id}>
+                                    {order.products.map(product => (
+                                        <div class="card card-body">
+                                        <p>{product.name} - {product.quantity}</p>
+                                        </div>
+                                    ))}
+                                    <div className='card card-footer'>
+                                        <p>Para: {order.userName} - Dirección: {order.userAddress} - Total: ${order.bill}</p>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
                             </div>
                         ))}
                     </div>

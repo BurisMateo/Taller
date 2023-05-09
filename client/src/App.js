@@ -16,17 +16,11 @@ import Favorites from "./components/user/Favorites";
 import MyOrders from "./components/order/MyOrders";
 
 function App() {
-  
-  const [carrito, setCarrito] = useState([])
 
   return (
     <>
       
       <Navbar />
-
-
-      {/*<Register /> */}
-      {/*<AddProduct/>*/}
 
       <Routes>
         <Route path="/" element={ <AllProducts /> } />
@@ -41,7 +35,6 @@ function App() {
         <Route path="/order-history" element={ <OrderHistory /> } />
         <Route path="/favorites" element={ <Favorites /> } />
         <Route path="/my-orders" element= { <MyOrders /> } />
-
       </Routes>
 
     </>

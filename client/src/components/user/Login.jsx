@@ -50,6 +50,7 @@ export default function Login() {
     return (
         <>
             <div className="login mb-5">
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/004/791/195/small/fork-and-knife-crossed-free-vector.jpg" />
                 <h1 class="display-3">Iniciar sesión</h1>
                 <div className="form-container">
                     <form onSubmit={(e) => onSubmit(e)}>

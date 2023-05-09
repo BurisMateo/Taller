@@ -10,10 +10,6 @@ const AddProduct = () => {
         price: 0
     });
     const [image,setImage] = useState();
-    const [tags, setTags] = useState([]);
-
-    
-    const [loading, setLoading] = useState(false);
 
     const { title, description, price } = inputs;
 
@@ -32,7 +28,6 @@ const AddProduct = () => {
             newProduct.append('price', price)
             newProduct.append('image', image)
             console.log(newProduct);
-            setLoading(true);
             await axios
                 .post("http://localhost:8080/api/products", newProduct)
                 .then((res) => {
@@ -46,8 +41,6 @@ const AddProduct = () => {
                 .catch((error) => {
                     console.error(error);
                 });
-
-            setLoading(false);
         } else {
             window.alert('Completa todos los datos')
         }

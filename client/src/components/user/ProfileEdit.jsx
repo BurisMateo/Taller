@@ -61,8 +61,10 @@ export default function ProfileEdit(props) {
                         <label htmlFor="name" className="form-label">Direccion</label>
                         <input type="text" className="form-control" id="address" value={address} onChange = { e => setAddress(e.target.value)} required />
                     </div>
-                    <Button className='btn btn-success' onClick={editPersonalData}>Confirmar</Button>
-                    <Button className='btn btn-danger' onClick={(()=>setIsOpen(false))}>Cancelar</Button>
+                    <div className='d-flex justify-content-center'>
+                        <Button className='btn btn-success' onClick={editPersonalData}>Confirmar</Button>
+                        <Button className='btn btn-danger ms-4' onClick={(()=>setIsOpen(false))}>Cancelar</Button>
+                    </div>
                     {isOpen ? null : <Profile state = {isOpen}/>}
 
                 </FormGroup>

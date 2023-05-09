@@ -7,9 +7,6 @@ export default function AdminButtons() {
             <a className="nav-link" aria-current="page" href="/">Inicio</a>
         </li>
         <li className="nav-item">
-            <a className="nav-link" aria-current="page" href="/products">Productos</a>
-        </li>
-        <li className="nav-item">
             <a className="nav-link" aria-current="page" href="/orders">Pedidos</a>
         </li>
         <li className="nav-item">

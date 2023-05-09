@@ -12,7 +12,8 @@ const verifyToken = async (req, res, next) => {
       }
     });
   } else {
-    res.status(400).json({ mensaje: "Debes enviar un token" });
+    //res.status(400).json({ mensaje: "Debes enviar un token" });
+    next();
   }
 };
 

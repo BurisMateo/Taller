@@ -14,6 +14,7 @@ export default function Product(props) {
     const [userId, setUserId] = useState()
     const { id } = useParams();
     const [edit, setEdit] = useState(props.state);
+    const [ cant , setCant]  = useState(0);
 
     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
@@ -31,22 +32,6 @@ export default function Product(props) {
       setProduct(data)
     }
 
-    const addToCart = () => {
-        const productId = id;
-        const quantity = 1;     
-        fetch(`http://localhost:8080/api/product/${id}`,{
-          method:'POST',
-          headers:{
-              'Content-Type':'application/json'
-          },
-          body:JSON.stringify({
-            productId,
-            quantity,
-            userId
-          })
-      })
-    }
-
     const addToFavs = (pid) => {
       const productId = pid; 
       console.log(userId, productId);
@@ -59,13 +44,33 @@ export default function Product(props) {
           productId
         })
     })
+    window.alert('Se ha agregado a tus favoritos')
   }
 
+  const addToCart = () => {
+    const productId = id;
+    const quantity = 1;
+    fetch(`http://localhost:8080/api/product/${id}`,{
+      method:'POST',
+      headers:{
+          'Content-Type':'application/json'
+      },
+      body:JSON.stringify({
+        productId,
+        quantity,
+        userId
+      })
+    })
+}
 
     const deleteProduct = (id) => {
-      axios
-      .delete(`http://localhost:8080/api/products/${id}`)
-      .then(navigate(`/`))
+      if (window.confirm('¿Esta seguro que desea eliminar este producto?')){
+        axios
+        .delete(`http://localhost:8080/api/products/${id}`)
+        .then(setTimeout(() => {
+              navigate("/")
+              }, 1000))
+      }
     }
 
     useEffect(() =>{
@@ -87,7 +92,7 @@ export default function Product(props) {
     },[token, userId]);
 
   return (
-    <div className="card mb-3 w-75">
+    <div className="card mb-3 w-75" style={{marginLeft:"15%", marginRight:"15%", marginTop:"5%"}}>
       <div className="row g-0">
         <div className="col-md-4">
           <img src={product.imgUrl} className="img-fluid rounded-start"></img>
@@ -108,7 +113,7 @@ export default function Product(props) {
               : isAuthenticated
                 ?
                   <div>
-                    <button className='btn btn-success' onClick={() => addToCart()}>Agregar al carrito</button>
+                    <button className='btn btn-success' onClick={() => { addToCart()}}>Agregar al carrito</button>
                     <button className='btn btn-warning ms-2' onClick={() => addToFavs(product._id)}>Agregar a fav</button>
                   </div>
                 :

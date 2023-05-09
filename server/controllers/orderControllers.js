@@ -6,7 +6,6 @@ const config = require('../config');
 require('dotenv').config();
 
 module.exports.get_orders = async (req,res) => {
-
     const userId = req.params.id;
     Order.find({userId}).sort({date:-1}).then(orders => res.json(orders));
 
@@ -54,7 +53,9 @@ module.exports.checkout = async (req, res) => {
             res.status(200).send({response})
             //creamos el pedido en la bd
             const order = await Order.create({
-                userId,
+                userId: user._id,
+                userName: user.name + ' '+ user.lastName,
+                userAddress: user.address,
                 products: cart.products,
                 bill: cart.bill
             });

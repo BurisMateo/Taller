@@ -6,25 +6,63 @@ export default function Cart() {
 
     const [cart, setCart] = useState();
     const [userId, setUserId] = useState();
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [currentCart, setCurrent] = useState(0);
     const token = localStorage.getItem("token");
 
     const navigate = useNavigate()
 
+    const addItemToCart = (id) => {
+        setCurrent(currentCart+1);
+        const productId = id;
+        const quantity = 1;
+        fetch(`http://localhost:8080/api/product/${id}`,{
+          method:'POST',
+          headers:{
+              'Content-Type':'application/json'
+          },
+          body:JSON.stringify({
+            productId,
+            quantity,
+            userId
+          })
+        })
+    }
+
+    const delItemFromCart = (id) => {
+        setCurrent(currentCart-1);
+        const productId = id;
+        const quantity = 1;
+        fetch(`http://localhost:8080/api/delcart/${id}`,{
+          method:'POST',
+          headers:{
+              'Content-Type':'application/json'
+          },
+          body:JSON.stringify({
+            productId,
+            quantity,
+            userId
+          })
+        })
+    }
+
     const deleteFromCart = (id) => {
-        axios
-        .delete(`http://localhost:8080/api/cart/${userId}/${id}`)
-        .then(navigate(0))
+        if (window.confirm("¿Estás seguro que deseas eliminarlo del carrito?") === true) {
+            axios
+            .delete(`http://localhost:8080/api/cart/${userId}/${id}`)
+            .then(navigate(0))
+        }
+
     }
 
     const Pagar = () => {
-        
-        axios.post(`http://localhost:8080/api/order/${userId}`).then((res)=>window.location.href = res.data.response.body.init_point)
-    }
+        axios
+            .post(`http://localhost:8080/api/order/${userId}`)
+            .then((res)=>window.location.href = res.data.response.body.init_point)
+    };
+
 
     useEffect( () =>{
         if (token) {
-            setIsAuthenticated(true);
             axios
                 .get(`http://localhost:8080/api/user`, {
                     headers: {
@@ -37,16 +75,17 @@ export default function Cart() {
                             .get(`http://localhost:8080/api/cart/${userId}`)
                             .then(({ data }) => {
                                 setCart(data);
+                                setCurrent(cart.bill);
                             })
                     }
                 })
                 .catch((error) => console.error(error));
         }
         //console.log(email);
-      },[userId]);
+      },[userId, currentCart]);
 
   return (
-    <div>
+    <div className='mt-5' style={{justifyContent:'center',display:'flex'}}>
         {
         cart !== undefined
         ?
@@ -61,12 +100,34 @@ export default function Cart() {
                                 cart.products.map(product => (
                                     <li className="list-group-item">
                                     <div className="row g-0">
-                                        <div className="col-md-4">
-                                            <h5 className="card-title">{product.name}</h5>
-                                            <h6 className="card-subtitle mb-2 text-muted">Cantidad: {product.quantity}</h6>
-                                            <p className="card-text">Precio unitario: ${product.price}</p>
-                                        </div>
                                         <div className="col-md-8">
+                                            <div className='row mb-2'>
+                                                <h5 className="card-title">{product.name}</h5>
+                                            </div>
+                                            <div className='row'> 
+                                                <div className='col-1'>
+                                                    <button type="button" class="btn btn-outline-danger btn-sm" onClick={() => delItemFromCart(product.productId)}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
+                                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <div className='col-1 mt-2 ms-4'>
+                                                    <h6 className="card-subtitle mb-2 text-muted"> {product.quantity} </h6> 
+                                                </div>
+                                                <div className='col-1'>
+                                                    <button type="button" class="btn btn-outline-success btn-sm" onClick={() => addItemToCart(product.productId)}>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div className='row mt-2'>
+                                                <p className="card-text">Precio unitario: ${product.price}</p>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-4">
                                             <div className='d-flex justify-content-end'>
                                                 <button className='btn btn-outline-danger' onClick={()=>deleteFromCart(product.productId)}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-bell-fill" viewBox="0 0 16 16">
@@ -80,8 +141,8 @@ export default function Cart() {
                                     </li>
                                 ))}
                             </ul>
-                            <p>Total: ${cart.bill}</p>
-                            <button onClick={Pagar}>Pagar</button>
+                            <h5 className='card-title text-center'>Total: ${cart.bill}</h5>
+                            <button className='btn btn-success' onClick={Pagar}>Pagar</button>
                         </div>
                     :
                         <p>No tienes productos en el carrito</p>

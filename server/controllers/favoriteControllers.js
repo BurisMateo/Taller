@@ -39,7 +39,7 @@ module.exports.add_fav_product = async (req,res) => {
             if(productIndex > -1)
             {
                 //si existe 
-                res.status.send("Ya es parte de tus favoritos")
+                res.status(400).send("Ya es parte de tus favoritos");
             }
             else {
                 //si no agrega el producto

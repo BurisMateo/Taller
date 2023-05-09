@@ -54,15 +54,10 @@ export default function ProductEdit(props) {
                         <label htmlFor="price" className="form-label">Precio</label>
                         <input type="number" className="form-control" id="price" onChange={e => setPrice(e.target.value)} value={price} name="price" required />
                     </div>
-                    {/**
-                            <div className="mb-3">
-                                <label for="tags" className="form-label">Etiquetas</label>
-                                <input type="text" className="form-control" id="tags" value = {tags} autoComplete='off' />
-                            </div>
-                            
-                             */}
-                    <Button className='btn btn-success' onClick={editProductData}>Confirmar</Button>
-                    <Button className='btn btn-danger' onClick={(() => setIsOpen(false))}>Cancelar</Button>
+                    <div className='d-flex justify-content-center'>
+                        <Button className='btn btn-success' onClick={editProductData}>Confirmar</Button>
+                        <Button className='btn btn-danger ms-4' onClick={(() => setIsOpen(false))}>Cancelar</Button>
+                    </div>
                     {isOpen ? null : <Product state={isOpen} />}
 
                 </FormGroup>
