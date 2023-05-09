@@ -61,6 +61,7 @@ export default function Product(props) {
         userId
       })
     })
+    window.alert('Se ha agregado a tu carrito')
 }
 
     const deleteProduct = (id) => {
