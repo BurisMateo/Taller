@@ -10,6 +10,8 @@ export default function AllProducts(props) {
   const token = localStorage.getItem("token");
   const [email, setEmail] = useState()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [data, setData] = useState (null)
+  const [require, setRequire] = useState(false)
   
   const isAuthorized = () => {
       if (!isAuthenticated || !config.authorized.includes(email)) return false;
@@ -25,10 +27,33 @@ export default function AllProducts(props) {
 
 
   const getData = async () => {
-    const res = await fetch('http://localhost:8080/api/products')
-    const data = await res.json();
-    setProducts(data)
-    console.log(data);
+    try {
+      const res = await fetch('http://localhost:8080/api/products')
+      const data = await res.json();
+      setProducts(data)
+      console.log(data);
+    } catch (error) {
+      throw error 
+    }
+  }
+
+
+  const addresAndPhoneNotNull = () => {
+    if (token) {
+      axios
+      .get(`http://localhost:8080/api/user`, {
+                headers: {
+                    token: token,
+                },
+            }).then(({ data }) => setData(data))
+            .catch((error) => console.error(error));
+    }
+    console.log(data.address, data.phoneNumber);
+    // if (data != null){
+    //   if (data.address == '' || data.phoneNumber == '') {
+    //     setRequire(true)
+    //   }
+    // }
   }
 
   useEffect(() => {
