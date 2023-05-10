@@ -3,10 +3,24 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
+const filterOrders = (allOrders, searchTerm) => {
+    if (!searchTerm) return allOrders;
+
+    return allOrders.filter((o) => 
+        `${o.userName}
+        ${o.userAddress}
+        ${o.products.map((p) => p.name).join(" ")}
+        ${o.state}`
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()));
+};
+
 export default function Orders() {
     const token = localStorage.getItem("token");
     const [email, setEmail] = useState()
     const [data, setData] = useState()
+    const [searchTerm, setSearchTerm] = useState("");
+    const filteredOrders = filterOrders(data, searchTerm);
 
     const navigate = useNavigate()
 
@@ -42,7 +56,12 @@ export default function Orders() {
     }, [token]);
 
     return (
-        <div className='mt-5'>
+        <div className="mt-5">
+        <input
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+    />
             <div className='d-grid gap-2 col-6 mx-auto justify-content-center mt-3 mb-3'>
                 <button className='btn btn-warning' onClick={()=>navigate('/order-history')}>Historial</button>
             </div>
@@ -50,7 +69,7 @@ export default function Orders() {
                 data !== undefined
                     ?
                     <div style={{displat:'flex', justifyContent:'center', textAlign:'center'}} >
-                        {data.map(order => (
+                        {filteredOrders.map(order => (
                             <div>
                                 <p>
                                     <a class="btn btn-primary" data-bs-toggle="collapse" href={('#').concat(order._id)} role="button" aria-expanded="false" aria-controls="collapseExample">Pedido #{order._id} - {order.state}</a>

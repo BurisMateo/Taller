@@ -21,7 +21,7 @@ const AddProduct = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        if (title !== "" && description !== "" && price !== 0 && /*tags !== [] &&*/ (image !== undefined || image !== null )) {
+        if (title !== "" && description !== "" && price !== 0 && (image !== undefined || image !== null )) {
             const newProduct = new FormData();
             newProduct.append('title', title)
             newProduct.append('description', description)
@@ -33,7 +33,7 @@ const AddProduct = () => {
                 .then((res) => {
                     const { data } = res;
                     console.log(data);
-                    setInputs({ title: "", description: "", price: 0, /*tags: [],*/ });
+                    setInputs({ title: "", description: "", price: 0});
                     setTimeout(() => {
                         navigate("/");
                     }, 1500);
