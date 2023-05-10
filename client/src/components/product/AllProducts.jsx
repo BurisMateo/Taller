@@ -39,7 +39,7 @@ export default function AllProducts(props) {
     try {
       const res = await fetch('http://localhost:8080/api/products')
       const data = await res.json();
-      setProducts(data)
+      setAllProducts(data)
       console.log(data);
     } catch (error) {
       throw error 

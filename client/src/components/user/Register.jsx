@@ -12,7 +12,6 @@ const Register = () => {
         phoneNumber: "",
         address: ""
     });
-    const [message, setMessage] = useState();
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();

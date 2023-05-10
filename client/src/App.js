@@ -14,6 +14,7 @@ import Orders from './components/order/Orders.jsx'
 import OrderHistory from "./components/order/OrderHistory.jsx";
 import Favorites from "./components/user/Favorites";
 import MyOrders from "./components/order/MyOrders";
+import AddData from "./components/user/AddData";
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" element={ <AllProducts /> } />
         <Route path="/login" element={ <Login /> } />
         <Route path="/register" element={ <Register /> } />
+        <Route path="/add-data" element={ <AddData />} />
         <Route path="/add-product" element={ <AddProduct /> } />
         <Route path="/profile" element={ <Profile /> } />
         <Route path="/products" element={ <AllProducts /> } />

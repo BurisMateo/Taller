@@ -13,6 +13,7 @@ const UserSchema = new Schema({
     },
     lastName: {
         type: String,
+        deafult: '',
         required: true
     },
     email: {
@@ -28,11 +29,11 @@ const UserSchema = new Schema({
     },
     phoneNumber: {
         type: String,
-        required: true
+        deafult: '123'
     },
     address: {
         type: String,
-        required: true
+        default: '123'
     },
     register_date: {
         type: Date,

@@ -9,5 +9,7 @@ router.get('/user', verifyToken, userController.get_userByID);
 router.post('/register', userController.register);
 router.post('/login', userController.login);
 router.put('/profile',userController.updateData);
+router.post('/glogin', userController.loginGoogle);
+router.post('/gregister', userController.registerGoogle);
 
 module.exports = router;

@@ -44,9 +44,9 @@ module.exports.add_fav_product = async (req,res) => {
             else {
                 //si no agrega el producto
                 fav.products.push({ productId, name, imgUrl });
+                fav = await fav.save();
+                return res.status(201).send(fav);
             }
-            fav = await fav.save();
-            return res.status(201).send(fav);
         }
         else{
             // Si el usuario no tiene favoritos
