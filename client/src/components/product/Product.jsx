@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ProductEdit from './ProductEdit';
+import Rating from '@mui/material/Rating'
 
 const config = require('../../config');
 
@@ -14,7 +15,7 @@ export default function Product(props) {
     const [userId, setUserId] = useState()
     const { id } = useParams();
     const [edit, setEdit] = useState(props.state);
-    const [ cant , setCant]  = useState(0);
+    const [currentValue, setCurrentVal] = useState(0)
 
     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
@@ -74,6 +75,24 @@ export default function Product(props) {
       }
     }
 
+    const setValoration = async (newValue) => {
+      setCurrentVal(parseInt(newValue))
+      const value = parseInt(newValue);
+      
+      await fetch(`http://localhost:8080/api/valproduct/${id}`,{
+        method:'PUT',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify({
+            userId,
+            value
+        })
+    })
+    
+    }
+
+
     useEffect(() =>{
       getData();
       if (token) {
@@ -83,14 +102,20 @@ export default function Product(props) {
           headers: {
             token: token,
           },
-        }).then(({ data }) => {
+        }).then( async ({ data }) => {
           setUserId(data._id);
           setUserEmail(data.email);
-          })
-            .catch((error) => console.error(error));
+          if (userId !== undefined) {
+            await axios
+                .get(`http://localhost:8080/api/valproduct/${id}/${userId}`)
+                .then(({ data }) => {
+                  setCurrentVal(parseInt(data));
+                })
+            }
+        })
+        .catch((error) => console.error(error));
       }
-      console.log(userEmail);
-    },[token, userId]);
+    },[userId, currentValue]);
 
   return (
     <div className="card mb-3 w-75" style={{marginLeft:"15%", marginRight:"15%", marginTop:"5%"}}>
@@ -98,7 +123,7 @@ export default function Product(props) {
         <div className="col-md-4">
           <img src={product.imgUrl} className="img-fluid rounded-start"></img>
         </div>
-        <div className="col-md-8">
+        <div className="col-md-6">
           <div className="card-body">
             <h5 className="card-title">{product.title}</h5>
             <h6 className="card-subtitle mb-2 text-muted">{product.description}</h6>
@@ -121,6 +146,22 @@ export default function Product(props) {
                 null
             }
           </div>
+        </div>
+        <div className='col-md-2'>
+          {
+            isAuthenticated
+            ?
+              <div>
+                <h1 className='text-center'>{product.rate}</h1>
+                <Rating
+                  name="simple-controlled"
+                  value={currentValue}
+                  onChange={(e) => { setValoration(e.target.value); }}
+                />
+              </div>
+            :
+            null
+          }
         </div>
       </div>
     </div>

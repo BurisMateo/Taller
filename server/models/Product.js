@@ -16,18 +16,22 @@ const ProductSchema = new Schema({
         type: Number,
         required: true
     },
-    /* VALORACION: VER COMO HACERLO
+    // VALORACION: VER COMO HACERLO
+    ratesByUser: [{
+        userId: {
+            type: String
+        },
+        value: {
+            type: Number
+        }
+    }],
     rate: {
         type: Number,
-        required: true
+        default: 0
     },
-*/
+
     imgUrl: {
         type: String
-    },
-    tags: {
-        type: [String],
-        required: true
     },
     date_added: {
         type: Date,

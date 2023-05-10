@@ -8,10 +8,18 @@ const productRoutes = require('./routes/product');
 const cartRoutes = require('./routes/cart');
 const orderRoutes = require('./routes/order');
 const favoriteRoutes = require('./routes/favorite');
+const { config: auth0config } = require('./auth/auth0.config');
+const { auth } = require('express-openid-connect');
 
 const app = express();
 app.use(cors())
 app.use(express.json());
+app.use(auth(auth0config));
+
+// req.isAuthenticated is provided from the auth router
+app.get('/', (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+});
 
 app.use('/api',userRoutes)
 app.use('/api',productRoutes);
