@@ -34,8 +34,8 @@ export default function AddData() {
     return (
         <>
             <div className="login mb-5">
-                <h1 class="display-6">Antes de continuar, necesitamos que nos digas tu Dirección y Número de Teléfono</h1>
                 <div className="form-container">
+                    <h4 className="mb-3">Antes de continuar, necesitamos que nos digas tu Dirección y Número de Teléfono</h4>
                     <form onSubmit={(e) => editPersonalData()}>
                         <div className="mb-3">
                             <label htmlfor="phoneNUmber" className="form-label">Número telefónico</label>
